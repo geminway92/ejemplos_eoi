@@ -12,13 +12,11 @@
         @input="filterSentence"
       />
     </div>
-    <div>
-      <label>{{ filtered }}</label>
-    </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 /**
  * Este componente tiene una funcionalidad simple de filtrado de texto
  * en base a un patrón dado. Se usa como ejemplo para aprender el uso
@@ -63,13 +61,17 @@ export default {
     };
   },
   methods: {
+    ...mapActions(['setFiltered']),
+
     filterSentence(e) {
       const splitedSentence = e.target.value.split(this.filter);
       this.filtered = '';
       for (const part of splitedSentence) {
         this.filtered += part;
       }
+      // this.setFiltered(this.filtered); //eso con vue 2, no se recomienda, rompe los test
       this.$emit('filtered', this.filtered);
+      this.$store.dispatch('setFiltered', this.filtered);
     },
   },
 };

@@ -1,22 +1,29 @@
 <template>
-  <FilterSentence
-    title="Filtrador"
-    filter="a"
-    @filtered="showFiltered"
-  />
+  <div class="container">
+    <FilterSentence title="Filtrador" filter="a" @filtered="showFiltered" />
+    <ReverseFilter :filterResult="this.filterResult" />
+  </div>
 </template>
 
 <script>
 import FilterSentence from './components/FilterSentence/FilterSentence.vue'
+import ReverseFilter from './components/ReverseFilter.vue'
 
 export default {
   name: 'App',
   components: {
-    FilterSentence
+    FilterSentence,
+    ReverseFilter,
+  },
+  data() {
+    return {
+      filterResult: '',
+    }
   },
   methods: {
     showFiltered(e) {
       console.log('Filtrado: ' + e);
+      this.filterResult = e;
     }
   },
 }
